@@ -1,0 +1,30 @@
+<!-- =========================================================
+  성미산 FAQ 로더 — Ghost FAQ 페이지에 "한 번만" 붙여넣는 코드
+  사용법: Ghost 에디터에서 기존 FAQ 내용을 지우고 "/HTML" 카드를 추가한 뒤
+          이 파일 전체를 붙여넣으세요. 이후 내용은 노션에서 수정하면 자동 반영됩니다.
+
+  ↓↓↓ 딱 한 줄, 본인 GitHub 사용자명으로 바꾸세요 ↓↓↓
+  ========================================================= -->
+<div id="smw-faq-root" class="smwiki">
+  <p style="text-align:center;color:#6b7563;padding:48px 0;">FAQ를 불러오는 중입니다…</p>
+</div>
+<script>
+(function () {
+  var USER = "heesun-woodi";          // GitHub 사용자명
+  var REPO = "sungmisan-faq-sync";    // 저장소 이름
+
+  var pagesUrl = "https://" + USER + ".github.io/" + REPO + "/faq.html";
+  var root = document.getElementById("smw-faq-root");
+
+  // 매시간 갱신되므로 1시간 단위 캐시버스터를 붙임
+  function bust(u) { return u + (u.indexOf("?") < 0 ? "?" : "&") + "v=" + Math.floor(Date.now() / 3600000); }
+
+  fetch(bust(pagesUrl), { cache: "no-cache" })
+    .then(function (r) { if (!r.ok) throw new Error("pages " + r.status); return r.text(); })
+    .then(function (html) { if (root) root.outerHTML = html; })
+    .catch(function () {
+      if (root) root.innerHTML =
+        '<p style="text-align:center;color:#6b7563;padding:48px 0;">FAQ를 잠시 불러오지 못했습니다. 잠시 후 새로고침 해주세요.</p>';
+    });
+})();
+</script>

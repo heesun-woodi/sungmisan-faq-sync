@@ -1,0 +1,17 @@
+{
+  "name": "sungmisan-faq-sync",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "성미산어린이집 FAQ를 노션에서 읽어 Ghost 홈페이지용 HTML로 빌드합니다 (Pull 방식).",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "node src/build.js",
+    "inspect": "node src/inspect.js"
+  },
+  "dependencies": {
+    "@notionhq/client": "^2.2.15"
+  }
+}
